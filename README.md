@@ -49,13 +49,40 @@ FastAPI genera automáticamente documentación interactiva:
 
 ## Endpoints
 
-### Items
+### Items Implementados ✅
 
 - `POST /api/v1/items/` - Crear un nuevo item
 - `GET /api/v1/items/` - Obtener todos los items
 - `GET /api/v1/items/{item_id}` - Obtener un item específico
+
+### Items por Implementar (Ejercicio para Estudiantes) 📝
+
 - `PUT /api/v1/items/{item_id}` - Actualizar un item
 - `DELETE /api/v1/items/{item_id}` - Eliminar un item
+
+## 🎯 Ejercicio para Estudiantes
+
+Este proyecto está parcialmente implementado. Los estudiantes deben completar las operaciones **UPDATE (PUT)** y **DELETE**.
+
+### Tareas a realizar:
+
+#### 1. Modelo ItemUpdate (`app/models/item.py`)
+- [ ] Descomentar y completar la clase `ItemUpdate`
+- [ ] Debe tener los mismos campos que `ItemCreate`
+
+#### 2. Funciones de Base de Datos (`app/database/memory_db.py`)
+- [ ] Implementar `update_item_by_id()`
+- [ ] Implementar `delete_item_by_id()`
+- [ ] Descomentar el import de `ItemUpdate`
+
+#### 3. Endpoints de API (`app/api/routes/items.py`)
+- [ ] Implementar endpoint PUT `/items/{item_id}`
+- [ ] Implementar endpoint DELETE `/items/{item_id}`
+- [ ] Descomentar los imports necesarios
+
+### 💡 Pistas y Guías
+
+Todos los archivos contienen comentarios `TODO:` con pistas específicas sobre cómo implementar cada función.
 
 ### Ejemplo de uso
 

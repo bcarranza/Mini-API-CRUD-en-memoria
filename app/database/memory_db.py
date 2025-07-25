@@ -1,7 +1,8 @@
 from typing import List, Optional
 from app.models.item import Item
 # TODO: EJERCICIO PARA ESTUDIANTES - Importar ItemUpdate cuando lo creen
-# from app.models.item import Item, ItemUpdate
+from app.models.item import Item, ItemUpdate
+
 
 # Base de datos en memoria
 items_db: List[Item] = []
@@ -24,14 +25,14 @@ def get_item_by_id(item_id: int) -> Optional[Item]:
     return None
 
 # TODO: EJERCICIO PARA ESTUDIANTES - Implementar función UPDATE
-# def update_item_by_id(item_id: int, item_update: ItemUpdate) -> Optional[Item]:
-#     """Actualizar un item por ID"""
-#     # PISTAS:
-#     # 1. Recorrer items_db con enumerate() para obtener índice y item
-#     # 2. Si item.id == item_id, crear un nuevo Item con los datos actualizados
-#     # 3. Reemplazar el item en items_db[idx] = nuevo_item
-#     # 4. Retornar el item actualizado
-#     # 5. Si no se encuentra, retornar None
+def update_item_by_id(item_id: int, item_update: ItemUpdate) -> Optional[Item]:
+    """Actualizar un item por ID"""
+    for idx, item in enumerate(items_db):
+        if item.id == item_id:
+            updated_item = Item(id=item_id, name=item_update.name, price=item_update.price)
+            items_db[idx] = updated_item
+            return updated_item
+    return None
 #     pass
 
 # TODO: EJERCICIO PARA ESTUDIANTES - Implementar función DELETE

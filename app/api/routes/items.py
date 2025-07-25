@@ -2,11 +2,11 @@ from fastapi import APIRouter, HTTPException
 from typing import List
 from app.models.item import Item, ItemCreate
 # TODO: EJERCICIO PARA ESTUDIANTES - Importar ItemUpdate cuando lo creen
-# from app.models.item import Item, ItemCreate, ItemUpdate
+from app.models.item import Item, ItemCreate, ItemUpdate
 
 from app.database.memory_db import get_items_db, add_item, get_item_by_id
 # TODO: EJERCICIO PARA ESTUDIANTES - Importar las funciones cuando las implementen
-# from app.database.memory_db import get_items_db, add_item, get_item_by_id, update_item_by_id, delete_item_by_id
+from app.database.memory_db import get_items_db, add_item, get_item_by_id, update_item_by_id, delete_item_by_id
 
 router = APIRouter()
 
@@ -31,12 +31,13 @@ def read_item(item_id: int):
     return item
 
 # TODO: EJERCICIO PARA ESTUDIANTES - Implementar endpoint PUT
-# @router.put("/items/{item_id}", response_model=Item)
-# def update_item(item_id: int, item: ItemUpdate):
-#     """Actualizar un item por ID"""
-#     # PISTAS:
-#     # 1. Llamar a update_item_by_id(item_id, item)
-#     # 2. Si retorna None, lanzar HTTPException con status_code=404
+@router.put("/items/{item_id}", response_model=Item)
+def update_item(item_id: int, item: ItemUpdate):
+    """Actualizar un item por ID"""
+    updated_item = update_item_by_id(item_id, item)
+    if not updated_item:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return updated_item
 #     # 3. Si encuentra el item, retornarlo
 #     pass
 

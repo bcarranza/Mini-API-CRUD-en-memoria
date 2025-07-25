@@ -38,15 +38,11 @@ def update_item(item_id: int, item: ItemUpdate):
     if not updated_item:
         raise HTTPException(status_code=404, detail="Item not found")
     return updated_item
-#     # 3. Si encuentra el item, retornarlo
-#     pass
 
 # TODO: EJERCICIO PARA ESTUDIANTES - Implementar endpoint DELETE
-# @router.delete("/items/{item_id}", status_code=204)
-# def delete_item(item_id: int):
-#     """Eliminar un item por ID"""
-#     # PISTAS:
-#     # 1. Llamar a delete_item_by_id(item_id)
-#     # 2. Si retorna False, lanzar HTTPException con status_code=404
-#     # 3. Si retorna True, no necesita retornar nada (status_code=204)
-#     pass 
+@router.delete("/items/{item_id}", status_code=204)
+def delete_item(item_id: int):
+    """Eliminar un item por ID"""
+    success = delete_item_by_id(item_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="Item not found") 

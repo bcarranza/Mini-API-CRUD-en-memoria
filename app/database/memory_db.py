@@ -40,4 +40,4 @@ def delete_item_by_id(item_id: int) -> bool:
     global items_db
     original_length = len(items_db)
     items_db = [item for item in items_db if item.id != item_id]
-    return len(items_db) < original_length
+    return len(items_db) < original_length 

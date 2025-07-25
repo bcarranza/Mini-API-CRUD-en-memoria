@@ -45,4 +45,4 @@ def delete_item(item_id: int):
     """Eliminar un item por ID"""
     success = delete_item_by_id(item_id)
     if not success:
-        raise HTTPException(status_code=404, detail="Item not found")
+        raise HTTPException(status_code=404, detail="Item not found") 

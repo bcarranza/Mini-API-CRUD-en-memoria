@@ -33,14 +33,11 @@ def update_item_by_id(item_id: int, item_update: ItemUpdate) -> Optional[Item]:
             items_db[idx] = updated_item
             return updated_item
     return None
-#     pass
 
 # TODO: EJERCICIO PARA ESTUDIANTES - Implementar función DELETE
-# def delete_item_by_id(item_id: int) -> bool:
+def delete_item_by_id(item_id: int) -> bool:
 #     """Eliminar un item por ID"""
-#     # PISTAS:
-#     # 1. Usar global items_db
-#     # 2. Guardar la longitud original de items_db
-#     # 3. Filtrar items_db manteniendo solo los items con id diferente a item_id
-#     # 4. Retornar True si se eliminó algo (longitud cambió), False si no
-#     pass 
+    global items_db
+    original_length = len(items_db)
+    items_db = [item for item in items_db if item.id != item_id]
+    return len(items_db) < original_length

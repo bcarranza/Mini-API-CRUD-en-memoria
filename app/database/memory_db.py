@@ -1,7 +1,7 @@
 from typing import List, Optional
 from app.models.item import Item
-# TODO: EJERCICIO PARA ESTUDIANTES - Importar ItemUpdate cuando lo creen
-# from app.models.item import Item, ItemUpdate
+#EJERCICIO PARA ESTUDIANTES - Importar ItemUpdate cuando lo creen
+from app.models.item import Item, ItemUpdate
 
 # Base de datos en memoria
 items_db: List[Item] = []

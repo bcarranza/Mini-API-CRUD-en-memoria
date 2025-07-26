@@ -35,6 +35,8 @@ def read_item(item_id: int):
 def update_item(item_id: int, item: ItemUpdate):
     """Actualizar un item por ID"""
     updated_item = update_item_by_id(item_id, item)
+    if updated_item is None:
+
     if not updated_item:
         raise HTTPException(status_code=404, detail="Item not found")
     return updated_item
@@ -43,6 +45,10 @@ def update_item(item_id: int, item: ItemUpdate):
 @router.delete("/items/{item_id}", status_code=204)
 def delete_item(item_id: int):
     """Eliminar un item por ID"""
+    deleted = delete_item_by_id(item_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Item not found")
+    # No se retorna nada, status_code=204 
     success = delete_item_by_id(item_id)
     if not success:
         raise HTTPException(status_code=404, detail="Item not found") 

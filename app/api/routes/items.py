@@ -1,12 +1,20 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
 from app.models.item import Item, ItemCreate
+
 # TODO: EJERCICIO PARA ESTUDIANTES - Importar ItemUpdate cuando lo creen
-# from app.models.item import Item, ItemCreate, ItemUpdate
+from app.models.item import Item, ItemCreate, ItemUpdate
 
 from app.database.memory_db import get_items_db, add_item, get_item_by_id
 # TODO: EJERCICIO PARA ESTUDIANTES - Importar las funciones cuando las implementen
-# from app.database.memory_db import get_items_db, add_item, get_item_by_id, update_item_by_id, delete_item_by_id
+
+#EJERCICIO PARA ESTUDIANTES - Importar ItemUpdate cuando lo creen
+from app.models.item import Item, ItemCreate, ItemUpdate
+
+from app.database.memory_db import get_items_db, add_item, get_item_by_id
+#EJERCICIO PARA ESTUDIANTES - Importar las funciones cuando las implementen
+
+from app.database.memory_db import get_items_db, add_item, get_item_by_id, update_item_by_id, delete_item_by_id
 
 router = APIRouter()
 
@@ -31,21 +39,19 @@ def read_item(item_id: int):
     return item
 
 # TODO: EJERCICIO PARA ESTUDIANTES - Implementar endpoint PUT
-# @router.put("/items/{item_id}", response_model=Item)
-# def update_item(item_id: int, item: ItemUpdate):
-#     """Actualizar un item por ID"""
-#     # PISTAS:
-#     # 1. Llamar a update_item_by_id(item_id, item)
-#     # 2. Si retorna None, lanzar HTTPException con status_code=404
-#     # 3. Si encuentra el item, retornarlo
-#     pass
+@router.put("/items/{item_id}", response_model=Item)
+def update_item(item_id: int, item: ItemUpdate):
+    """Actualizar un item por ID"""
+    updated_item = update_item_by_id(item_id, item)
+    if updated_item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return updated_item
 
 # TODO: EJERCICIO PARA ESTUDIANTES - Implementar endpoint DELETE
-# @router.delete("/items/{item_id}", status_code=204)
-# def delete_item(item_id: int):
-#     """Eliminar un item por ID"""
-#     # PISTAS:
-#     # 1. Llamar a delete_item_by_id(item_id)
-#     # 2. Si retorna False, lanzar HTTPException con status_code=404
-#     # 3. Si retorna True, no necesita retornar nada (status_code=204)
-#     pass 
+@router.delete("/items/{item_id}", status_code=204)
+def delete_item(item_id: int):
+    """Eliminar un item por ID"""
+    deleted = delete_item_by_id(item_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Item not found")
+    # No es necesario retornar nada (status_code=204)

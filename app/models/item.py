@@ -10,9 +10,16 @@ class ItemCreate(BaseModel):
     name: str
     price: float
 
+
 # TODO: EJERCICIO PARA ESTUDIANTES
 # Crear aquí el modelo ItemUpdate para las operaciones PUT
 # Pista: Debe tener los mismos campos que ItemCreate
-# class ItemUpdate(BaseModel):
-#     name: str
-#     price: float 
+class ItemUpdate(BaseModel):
+     name: str
+     price: float 
+
+# Ejercicio para estudiantes - Implementar el modelo ItemUpdate para operaciones PUT
+class ItemUpdate(BaseModel):
+    name: str
+    price: float
+

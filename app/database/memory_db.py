@@ -1,7 +1,8 @@
 from typing import List, Optional
 from app.models.item import Item
 # TODO: EJERCICIO PARA ESTUDIANTES - Importar ItemUpdate cuando lo creen
-# from app.models.item import Item, ItemUpdate
+from app.models.item import Item, ItemUpdate
+
 
 # Base de datos en memoria
 items_db: List[Item] = []
@@ -24,6 +25,8 @@ def get_item_by_id(item_id: int) -> Optional[Item]:
     return None
 
 def update_item_by_id(item_id: int, item_update: 'ItemUpdate') -> Optional[Item]:
+# TODO: EJERCICIO PARA ESTUDIANTES - Implementar función UPDATE
+def update_item_by_id(item_id: int, item_update: ItemUpdate) -> Optional[Item]:
     """Actualizar un item por ID"""
     for idx, item in enumerate(items_db):
         if item.id == item_id:
@@ -38,3 +41,10 @@ def delete_item_by_id(item_id: int) -> bool:
     original_len = len(items_db)
     items_db = [item for item in items_db if item.id != item_id]
     return len(items_db) < original_len 
+# TODO: EJERCICIO PARA ESTUDIANTES - Implementar función DELETE
+def delete_item_by_id(item_id: int) -> bool:
+    """Eliminar un item por ID"""
+    global items_db
+    original_length = len(items_db)
+    items_db = [item for item in items_db if item.id != item_id]
+    return len(items_db) < original_length 

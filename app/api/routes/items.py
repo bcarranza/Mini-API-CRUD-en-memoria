@@ -1,11 +1,19 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
 from app.models.item import Item, ItemCreate
+
 # TODO: EJERCICIO PARA ESTUDIANTES - Importar ItemUpdate cuando lo creen
 from app.models.item import Item, ItemCreate, ItemUpdate
 
 from app.database.memory_db import get_items_db, add_item, get_item_by_id
 # TODO: EJERCICIO PARA ESTUDIANTES - Importar las funciones cuando las implementen
+
+#EJERCICIO PARA ESTUDIANTES - Importar ItemUpdate cuando lo creen
+from app.models.item import Item, ItemCreate, ItemUpdate
+
+from app.database.memory_db import get_items_db, add_item, get_item_by_id
+#EJERCICIO PARA ESTUDIANTES - Importar las funciones cuando las implementen
+
 from app.database.memory_db import get_items_db, add_item, get_item_by_id, update_item_by_id, delete_item_by_id
 
 router = APIRouter()

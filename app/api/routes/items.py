@@ -30,7 +30,7 @@ def read_item(item_id: int):
         raise HTTPException(status_code=404, detail="Item not found")
     return item
 
-# TODO: EJERCICIO PARA ESTUDIANTES - Implementar endpoint PUT
+# TODO: EJERCICIO PARA ESTUDIANTES - Implementar endpoint PUT completado
 @router.put("/items/{item_id}", response_model=Item)
 def update_item(item_id: int, item: ItemUpdate):
     """Actualizar un item por ID"""
@@ -39,7 +39,7 @@ def update_item(item_id: int, item: ItemUpdate):
         raise HTTPException(status_code=404, detail="Item not found")
     return updated_item
 
-# TODO: EJERCICIO PARA ESTUDIANTES - Implementar endpoint DELETE
+# TODO: EJERCICIO PARA ESTUDIANTES - Implementar endpoint DELETE completado
 @router.delete("/items/{item_id}", status_code=204)
 def delete_item(item_id: int):
     """Eliminar un item por ID"""

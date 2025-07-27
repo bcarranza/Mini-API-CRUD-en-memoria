@@ -29,7 +29,8 @@ def update_item_by_id(item_id: int, item_update: ItemUpdate) -> Optional[Item]:
         if item.id == item_id:
             updated_item = Item(id=item.id, name=item_update.name, price=item_update.price)
             items_db[idx] = updated_item
-            return
+            return updated_item 
+    return None
 
 # TODO: EJERCICIO PARA ESTUDIANTES - Implementar función DELETE
 def delete_item_by_id(item_id: int) -> bool:
@@ -37,4 +38,4 @@ def delete_item_by_id(item_id: int) -> bool:
     global items_db
     original_len = len(items_db)
     items_db = [item for item in items_db if item.id != item_id]
-    return len(items_db)
+    return len(items_db) < original_len  

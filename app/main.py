@@ -12,4 +12,4 @@ app.include_router(items.router, prefix="/api/v1", tags=["items"])
 
 @app.get("/")
 def read_root():
-    return {"message": "Bienvenido a la Mini API CRUD en memoria"} 
+    return {"message": "Bienvenido a la Mini API CRUD en memoria"}

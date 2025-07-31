@@ -12,8 +12,9 @@ def test_post_items_validos():
     data = {"name": "Pepino", "price": 12}
     response = client.post("/api/v1/items/", json=data)
     assert response.status_code == 201
-    assert response.json()["name"] == "Pepino"
-    assert response.json()["price"] == 12
+    json_response = response.json()
+    assert json_response["name"] == data["name"]
+    assert json_response["price"] == data["price"]
 
 def test_post_items_datos_invalidos():
     data = {"name": "Pan", "price": -0}

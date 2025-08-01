@@ -15,4 +15,7 @@ class ItemCreate(BaseModel):
 # Pista: Debe tener los mismos campos que ItemCreate
 class ItemUpdate(BaseModel):
     name: str
+feature/test-homework
     price: float = Field(..., gt=0)
+    price: float 
+ 

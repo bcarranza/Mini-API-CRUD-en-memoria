@@ -15,4 +15,4 @@ class ItemCreate(BaseModel):
 # Pista: Debe tener los mismos campos que ItemCreate
 class ItemUpdate(BaseModel):
     name: str
-    price: float 
+    price: float

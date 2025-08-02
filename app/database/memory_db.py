@@ -1,6 +1,4 @@
 from typing import List, Optional
-from app.models.item import Item
-# TODO: EJERCICIO PARA ESTUDIANTES - Importar ItemUpdate cuando lo creen
 from app.models.item import Item, ItemUpdate
 
 
@@ -24,7 +22,6 @@ def get_item_by_id(item_id: int) -> Optional[Item]:
             return item
     return None
 
-# TODO: EJERCICIO PARA ESTUDIANTES - Implementar función UPDATE
 def update_item_by_id(item_id: int, item_update: ItemUpdate) -> Optional[Item]:
     """Actualizar un item por ID"""
     for idx, item in enumerate(items_db):
@@ -34,7 +31,6 @@ def update_item_by_id(item_id: int, item_update: ItemUpdate) -> Optional[Item]:
             return updated_item
     return None
 
-# TODO: EJERCICIO PARA ESTUDIANTES - Implementar función DELETE
 def delete_item_by_id(item_id: int) -> bool:
     """Eliminar un item por ID"""
     global items_db

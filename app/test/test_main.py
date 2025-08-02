@@ -5,11 +5,13 @@ from app.main import app
 client = TestClient(app)
 
 #code 200:  indica que una solicitud se ha realizado correctamente.
+
 def test_get_root_returns_200():
     response = client.get("/")
     assert response.status_code == 200
 
 #code 201: indica que una solicitud POST se ha procesado correctamente y se ha creado un nuevo recurso.
+
 def test_post_item_con_datos_validos():
     data = {"name": "Pen", "price": 1.5}
     response = client.post("/api/v1/items/", json=data)
@@ -49,11 +51,3 @@ def test_post_item_con_id_existente():
 def test_item_no_encontrado():
     response = client.get("/api/v1/items/967")
     assert response.status_code == 410
-
-
-
-
-
-
-
-    

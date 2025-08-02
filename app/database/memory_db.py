@@ -27,7 +27,6 @@ def get_item_by_id(item_id: int) -> Optional[Item]:
 
 def update_item_by_id(item_id: int, item_update: 'ItemUpdate') -> Optional[Item]:
 # TODO: EJERCICIO PARA ESTUDIANTES - Implementar función UPDATE
-def update_item_by_id(item_id: int, item_update: ItemUpdate) -> Optional[Item]:
     """Actualizar un item por ID"""
     for idx, item in enumerate(items_db):
         if item.id == item_id:

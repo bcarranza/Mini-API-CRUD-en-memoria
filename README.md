@@ -21,6 +21,9 @@ Mini-API-CRUD-en-memoria/
 │       ├── __init__.py
 │       └── memory_db.py       # Lógica de base de datos en memoria
 ├── requirements.txt           # Dependencias del proyecto
+├── test_main.py              # Pruebas unitarias con pytest
+├── pytest.ini               # Configuración de pytest
+├── run_tests.py             # Script para ejecutar pruebas
 └── README.md                 # Este archivo
 ```
 
@@ -99,4 +102,37 @@ Todos los archivos contienen comentarios `TODO:` con pistas específicas sobre c
   "name": "Laptop",
   "price": 999.99
 }
-``` 
+```
+
+## 🧪 Pruebas
+
+### Ejecutar las pruebas
+
+```bash
+# Opción 1: Usar el script personalizado
+python run_tests.py
+
+# Opción 2: Usar pytest directamente
+pytest test_main.py -v
+
+# Opción 3: Ejecutar con más detalles
+pytest test_main.py -v --tb=long
+```
+
+### Pruebas implementadas
+
+El archivo `test_main.py` incluye **7 pruebas** que cubren:
+
+1. **test_create_item_success** - Crear item exitosamente
+2. **test_get_all_items_empty** - Obtener lista vacía de items
+3. **test_get_item_by_id_not_found** - Error 404 al buscar item inexistente
+4. **test_create_item_missing_fields** - Error 422 con datos faltantes
+5. **test_update_item_success** - Actualizar item exitosamente
+6. **test_delete_item_success** - Eliminar item exitosamente
+7. **test_create_item_invalid_price** - Crear item con precio negativo
+
+### Casos de error probados
+
+- ✅ **Datos faltantes**: Campo `price` faltante (código 422)
+- ✅ **Item no encontrado**: Buscar item con ID inexistente (código 404)
+- ✅ **Validación de datos**: Precios negativos (aceptado por defecto) 

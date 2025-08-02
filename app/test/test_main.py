@@ -4,7 +4,6 @@ from app.main import app
 
 client = TestClient(app)
 def test_crear_item_con_emoji():
-    """Test: Crear item con emoji"""
     item = {"name": "Item 🚀", "price": 50.0}
     response = client.post("/api/v1/items/", json=item)
     assert response.status_code == 201
@@ -12,13 +11,11 @@ def test_crear_item_con_emoji():
     assert data["name"] == "Item 🚀"
 
 def test_crear_item_precio_negativo():
-    """Test: Intentar crear item con precio negativo (debe fallar)"""
     item = {"name": "Item con Descuento", "price": -10.50}
     response = client.post("/api/v1/items/", json=item)
     assert response.status_code == 422
 
 def test_crear_item_nombre_vacio():
-    """Test: Intentar crear item con nombre vacío (debe fallar)"""
     item = {"name": "", "price": 10.50}
     response = client.post("/api/v1/items/", json=item)
     assert response.status_code == 422

@@ -24,6 +24,11 @@ def get_item_by_id(item_id: int) -> Optional[Item]:
             return item
     return None
 
+def reset_db():
+    """Resetear la base de datos en memoria"""
+    global items_db
+    items_db.clear()
+
 # TODO: EJERCICIO PARA ESTUDIANTES - Implementar función UPDATE
 def update_item_by_id(item_id: int, item_update: ItemUpdate) -> Optional[Item]:
     """Actualizar un item por ID"""

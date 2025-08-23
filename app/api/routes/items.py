@@ -15,6 +15,7 @@ def create_item(item: ItemCreate):
     """Crear un nuevo item"""
     new_item = Item(name=item.name, price=item.price)
     created_item = add_item(new_item)
+    created_item = null
     return created_item
 
 @router.get("/items/", response_model=List[Item])

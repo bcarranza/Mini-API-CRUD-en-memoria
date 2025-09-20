@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Educativa: Nueva Implementación de Mini API CRUD</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: #2980b9;
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border-radius: 8px;
+        }
+        
+        h3 {
+            color: #34495e;
+            font-size: 1.4em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        
+        h4 {
+            color: #555;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        ul, ol {
+            margin-bottom: 15px;
+            padding-left: 25px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background-color: #f1f2f6;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9em;
+            color: #e74c3c;
+        }
+        
+        pre {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        th, td {
+            border: 1px solid #e0e6ed;
+            padding: 12px 15px;
+            text-align: left;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        tr:hover {
+            background-color: #e8f4f8;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-left: 4px solid #f39c12;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        
+        .info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        
+        .command-box {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #4fd1c7;
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .toc h3 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .toc li {
+            padding: 5px 0;
+        }
+        
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #3498db;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin: 2px;
+        }
+        
+        .badge.new { background: #27ae60; }
+        .badge.updated { background: #f39c12; }
+        .badge.important { background: #e74c3c; }
+        
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; }
+            pre { break-inside: avoid; }
+            table { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><span class="emoji">📚</span> Guía Educativa: Nueva Implementación de Mini API CRUD</h1>
+
+        <div class="highlight">
+            <h2 style="margin: 0; color: white;"><span class="emoji">🎯</span> Resumen Ejecutivo</h2>
+            <p style="margin: 10px 0 0 0; color: white;">Esta guía explica paso a paso las <strong>nuevas funcionalidades</strong> implementadas en el proyecto Mini API CRUD, transformándolo de una API básica en memoria a una <strong>aplicación profesional con PostgreSQL, Docker y migraciones automáticas</strong>.</p>
+        </div>
+
+        <h3><span class="emoji">🔄</span> Cambios Principales Implementados</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Funcionalidad</th>
+                    <th>Antes</th>
+                    <th>Después</th>
+                    <th>Beneficio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Base de Datos</strong></td>
+                    <td>En memoria (volátil)</td>
+                    <td>PostgreSQL (persistente)</td>
+                    <td>Datos permanentes</td>
+                </tr>
+                <tr>
+                    <td><strong>Deployment</strong></td>
+                    <td>Manual</td>
+                    <td>Docker + Docker Compose</td>
+                    <td>Fácil despliegue</td>
+                </tr>
+                <tr>
+                    <td><strong>Migraciones</strong></td>
+                    <td>Ninguna</td>
+                    <td>Alembic automático</td>
+                    <td>Control de versiones DB</td>
+                </tr>
+                <tr>
+                    <td><strong>Automatización</strong></td>
+                    <td>Ninguna</td>
+                    <td>Makefile completo</td>
+                    <td>Comandos simplificados</td>
+                </tr>
+                <tr>
+                    <td><strong>Arquitectura</strong></td>
+                    <td>Monolítica simple</td>
+                    <td>Capas separadas</td>
+                    <td>Mantenibilidad</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="toc">
+            <h3><span class="emoji">📋</span> Índice</h3>
+            <ul>
+                <li>1. <a href="#db-migration">🗄️ Migración a PostgreSQL</a></li>
+                <li>2. <a href="#docker-impl">🐳 Implementación con Docker</a></li>
+                <li>3. <a href="#alembic-migrations">🔄 Sistema de Migraciones con Alembic</a></li>
+                <li>4. <a href="#makefile-automation">🛠️ Automatización con Makefile</a></li>
+                <li>5. <a href="#new-architecture">🏗️ Nueva Arquitectura del Proyecto</a></li>
+                <li>6. <a href="#practical-cases">🧪 Casos de Uso Prácticos</a></li>
+                <li>7. <a href="#student-exercises">🎓 Ejercicios para Estudiantes</a></li>
+            </ul>
+        </div>
+
+        <h2 id="db-migration"><span class="emoji">🗄️</span> 1. Migración a PostgreSQL</h2>
+
+        <h3>¿Qué cambió?</h3>
+
+        <div class="warning">
+            <strong>ANTES:</strong> La API almacenaba datos en memoria usando listas de Python
+            <pre><code># Datos volátiles - se perdían al reiniciar
+items = []</code></pre>
+        </div>
+
+        <div class="success">
+            <strong>DESPUÉS:</strong> Base de datos PostgreSQL persistente con SQLAlchemy ORM
+        </div>
+
+        <h3><span class="emoji">📁</span> Archivos Nuevos Creados</h3>
+
+        <h4><span class="badge new">NUEVO</span> <code>app/database/db.py</code> - Configuración de Base de Datos</h4>
+        
+        <pre><code>from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
+# URL de conexión a PostgreSQL
+DATABASE_URL = os.getenv(
+    "DATABASE_URL", 
+    "postgresql://postgres:password@localhost:5432/mini_crud_db"
+)
+
+# Motor de SQLAlchemy con configuración optimizada
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,  # ✅ Verificar conexiones
+    pool_recycle=300,    # ✅ Reciclar conexiones cada 5min
+)</code></pre>
+
+        <div class="info">
+            <strong>💡 Conceptos Clave para Estudiantes:</strong>
+            <ul>
+                <li><strong>Pool de Conexiones</strong>: Reutiliza conexiones para mejor rendimiento</li>
+                <li><strong>Configuración por Variables de Entorno</strong>: Permite diferentes configuraciones (dev/prod)</li>
+                <li><strong>Session Management</strong>: Patrón para manejar transacciones de BD</li>
+            </ul>
+        </div>
+
+        <h4><span class="badge new">NUEVO</span> <code>app/database/models.py</code> - Modelos SQLAlchemy</h4>
+        
+        <pre><code>from sqlalchemy import Column, Integer, String, Float
+from app.database.db import Base
+
+class Item(Base):
+    __tablename__ = "items"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True, nullable=False)
+    price = Column(Float, nullable=False)</code></pre>
+
+        <div class="info">
+            <strong>🎓 Puntos de Aprendizaje:</strong>
+            <ul>
+                <li><strong>ORM (Object-Relational Mapping)</strong>: Mapea objetos Python a tablas SQL</li>
+                <li><strong>Índices</strong>: Mejoran performance de consultas</li>
+                <li><strong>Constraints</strong>: <code>nullable=False</code> garantiza integridad de datos</li>
+            </ul>
+        </div>
+
+        <h4><span class="badge new">NUEVO</span> <code>app/database/crud.py</code> - Operaciones de Base de Datos</h4>
+        
+        <pre><code>def create_item(db: Session, item: ItemCreate) -> ItemModel:
+    """Crear un nuevo item con transacción segura"""
+    db_item = ItemModel(name=item.name, price=item.price)
+    db.add(db_item)
+    db.commit()        # ✅ Confirma cambios
+    db.refresh(db_item) # ✅ Actualiza el objeto con el ID generado
+    return db_item</code></pre>
+
+        <div class="info">
+            <strong>🔍 Patrón Repository:</strong>
+            <ul>
+                <li>Separa lógica de negocio de acceso a datos</li>
+                <li>Facilita testing con mocks</li>
+                <li>Reutilizable desde diferentes endpoints</li>
+            </ul>
+        </div>
+
+        <h4><span class="badge new">NUEVO</span> <code>app/schemas.py</code> - Validación con Pydantic</h4>
+        
+        <pre><code>class ItemCreate(ItemBase):
+    pass  # Hereda name y price
+
+class Item(ItemBase):
+    id: int
+    
+    class Config:
+        from_attributes = True  # ✅ Para SQLAlchemy 2.0+</code></pre>
+
+        <div class="success">
+            <strong>⚡ Beneficios de Pydantic:</strong>
+            <ul>
+                <li>Validación automática de tipos</li>
+                <li>Serialización JSON automática</li>
+                <li>Documentación API automática con FastAPI</li>
+            </ul>
+        </div>
+
+        <h2 id="docker-impl"><span class="emoji">🐳</span> 2. Implementación con Docker</h2>
+
+        <h3>¿Por qué Docker?</h3>
+
+        <div class="warning">
+            <strong>PROBLEMA ANTES:</strong>
+            <ul>
+                <li>"En mi máquina funciona" 🤷‍♂️</li>
+                <li>Instalación manual de PostgreSQL</li>
+                <li>Configuración compleja para nuevos desarrolladores</li>
+            </ul>
+        </div>
+
+        <div class="success">
+            <strong>SOLUCIÓN CON DOCKER:</strong>
+            <ul>
+                <li>Entorno idéntico para todos</li>
+                <li>Un comando para todo: <code>docker-compose up</code></li>
+                <li>PostgreSQL incluido automáticamente</li>
+            </ul>
+        </div>
+
+        <h3><span class="emoji">📁</span> Archivos Docker Creados</h3>
+
+        <h4><span class="badge new">NUEVO</span> <code>Dockerfile</code> - Imagen de la Aplicación</h4>
+        
+        <pre><code>FROM python:3.11-slim
+
+WORKDIR /app
+
+# ✅ Instalar dependencias de sistema para PostgreSQL
+RUN apt-get update && apt-get install -y \
+    gcc \
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
+
+# ✅ Instalar dependencias Python
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# ✅ Copiar código de aplicación
+COPY . .
+
+# ✅ Script de entrada para migraciones
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+
+EXPOSE 8000
+ENTRYPOINT ["/docker-entrypoint.sh"]</code></pre>
+
+        <div class="info">
+            <strong>🎯 Mejores Prácticas Aplicadas:</strong>
+            <ul>
+                <li><strong>Multi-stage builds</strong>: Imagen optimizada</li>
+                <li><strong>Non-root user</strong>: Seguridad mejorada</li>
+                <li><strong>Cache layers</strong>: Builds más rápidos</li>
+                <li><strong>Health checks</strong>: Monitoreo automático</li>
+            </ul>
+        </div>
+
+        <h4><span class="badge new">NUEVO</span> <code>docker-compose.yml</code> - Orquestación de Servicios</h4>
+        
+        <pre><code>version: '3.8'
+
+services:
+  # 🐘 Base de datos PostgreSQL
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: mini_crud_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 🚀 Aplicación FastAPI  
+  web:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://postgres:password@db:5432/mini_crud_db
+    depends_on:
+      db:
+        condition: service_healthy  # ✅ Espera a que PostgreSQL esté listo
+    ports:
+      - "8000:8000"</code></pre>
+
+        <div class="info">
+            <strong>🔑 Conceptos Clave:</strong>
+            <ul>
+                <li><strong>Service Dependencies</strong>: <code>depends_on</code> con health checks</li>
+                <li><strong>Named Volumes</strong>: Persistencia de datos</li>
+                <li><strong>Environment Variables</strong>: Configuración flexible</li>
+                <li><strong>Network Isolation</strong>: Servicios comunicándose por nombres</li>
+            </ul>
+        </div>
+
+        <h2 id="alembic-migrations"><span class="emoji">🔄</span> 3. Sistema de Migraciones con Alembic</h2>
+
+        <h3>¿Qué son las Migraciones?</h3>
+        
+        <div class="highlight">
+            <p>Las migraciones son <strong>scripts que modifican la estructura de la base de datos</strong> de forma controlada y versionada.</p>
+        </div>
+
+        <h3><span class="emoji">📚</span> Migraciones Creadas</h3>
+
+        <h4>Primera Migración: <code>1571b66abaf5_create_items_table.py</code></h4>
+        
+        <pre><code>def upgrade() -> None:
+    """Crear tabla items"""
+    op.create_table(
+        'items',
+        sa.Column('id', sa.Integer, primary_key=True, index=True),
+        sa.Column('name', sa.String, nullable=False, index=True),
+        sa.Column('price', sa.Float, nullable=False)
+    )
+
+def downgrade() -> None:
+    """Eliminar tabla items"""
+    op.drop_table('items')</code></pre>
+
+        <h4>Segunda Migración: <code>2a86dbf567c0_add_sample_data.py</code></h4>
+        
+        <pre><code>def upgrade() -> None:
+    """Insertar datos de prueba"""
+    items_table = sa.table('items', ...)
+    op.bulk_insert(items_table, [
+        {'name': 'Laptop', 'price': 999.99},
+        {'name': 'Mouse', 'price': 29.99},
+        {'name': 'Teclado', 'price': 79.99},
+        {'name': 'Monitor', 'price': 299.99},
+        {'name': 'Auriculares', 'price': 149.99}
+    ])</code></pre>
+
+        <div class="command-box">
+            <strong>🎯 Comandos de Alembic Esenciales</strong>
+            <pre><code># Crear nueva migración automática
+alembic revision --autogenerate -m "descripcion"
+
+# Aplicar migraciones
+alembic upgrade head
+
+# Ver historial
+alembic history
+
+# Rollback
+alembic downgrade -1</code></pre>
+        </div>
+
+        <div class="success">
+            <strong>🔍 Ventajas del Sistema de Migraciones:</strong>
+            <ul>
+                <li><strong>Control de Versiones</strong>: Seguimiento de cambios en BD</li>
+                <li><strong>Deployment Seguro</strong>: Cambios aplicados automáticamente</li>
+                <li><strong>Rollback</strong>: Posibilidad de revertir cambios</li>
+                <li><strong>Trabajo en Equipo</strong>: Sincronización de esquemas</li>
+            </ul>
+        </div>
+
+        <h2 id="makefile-automation"><span class="emoji">🛠️</span> 4. Automatización con Makefile</h2>
+
+        <h3>¿Por qué un Makefile?</h3>
+
+        <div class="warning">
+            <strong>ANTES:</strong> Comandos largos y complejos de recordar
+            <pre><code>docker-compose down && docker-compose build && docker-compose up</code></pre>
+        </div>
+
+        <div class="success">
+            <strong>DESPUÉS:</strong> Comandos simples y memorizables
+            <pre><code>make up
+make restart
+make logs</code></pre>
+        </div>
+
+        <h3><span class="emoji">📁</span> Comandos Principales Implementados</h3>
+
+        <div class="command-box">
+            <strong>Comandos de Docker</strong>
+            <pre><code># Iniciar todos los servicios
+make up
+
+# Detener servicios  
+make down
+
+# Ver logs en tiempo real
+make logs
+
+# Acceder al contenedor
+make shell
+
+# Acceder a PostgreSQL
+make db-shell</code></pre>
+        </div>
+
+        <div class="command-box">
+            <strong>Comandos de Base de Datos</strong>
+            <pre><code># Ejecutar migraciones
+make migrate
+
+# Crear nueva migración
+make migrate-create
+
+# Ver historial de migraciones
+make migrate-history</code></pre>
+        </div>
+
+        <div class="command-box">
+            <strong>Comandos de Desarrollo</strong>
+            <pre><code># Ejecutar tests
+make test
+
+# Información de debug
+make debug
+
+# Fix completo
+make fix
+
+# Limpiar todo
+make clean</code></pre>
+        </div>
+
+        <div class="info">
+            <strong>🎓 Beneficios para Estudiantes:</strong>
+            <ul>
+                <li><strong>Comandos Estándar</strong>: Misma experiencia en todos los proyectos</li>
+                <li><strong>Documentación Viva</strong>: <code>make help</code> muestra todos los comandos</li>
+                <li><strong>Menos Errores</strong>: Comandos probados y estables</li>
+                <li><strong>Productividad</strong>: Flujo de trabajo más rápido</li>
+            </ul>
+        </div>
+
+        <h2 id="new-architecture"><span class="emoji">🏗️</span> 5. Nueva Arquitectura del Proyecto</h2>
+
+        <h3>Estructura Antes vs Después</h3>
+
+        <div class="warning">
+            <strong>ANTES (Simple)</strong>
+            <pre><code>app/
+├── main.py (todo mezclado)
+└── models/
+    └── item.py (modelo simple)</code></pre>
+        </div>
+
+        <div class="success">
+            <strong>DESPUÉS (Profesional)</strong>
+            <pre><code>Mini-API-CRUD-en-memoria/
+├── 🐳 Docker
+│   ├── docker-compose.yml      # Orquestación
+│   ├── Dockerfile             # Imagen aplicación
+│   ├── docker-entrypoint.sh   # Script inicio
+│   └── .dockerignore          # Archivos ignorados
+│
+├── 📊 Base de Datos
+│   ├── alembic.ini            # Config Alembic
+│   └── alembic/               # Migraciones
+│       ├── env.py
+│       └── versions/
+│           ├── 1571b66abaf5_create_items_table.py
+│           └── 2a86dbf567c0_add_sample_data.py
+│
+├── 🚀 Aplicación
+│   └── app/
+│       ├── main.py            # FastAPI principal
+│       ├── schemas.py         # Validación Pydantic
+│       ├── api/routes/items.py # Endpoints REST
+│       └── database/
+│           ├── db.py          # Config PostgreSQL
+│           ├── models.py      # Modelos SQLAlchemy
+│           └── crud.py        # Operaciones BD
+│
+├── 📚 Documentación
+│   ├── README_DOCKER.md       # Guía Docker
+│   ├── DATABASE_SETUP.md      # Setup PostgreSQL
+│   └── Makefile              # Comandos útiles
+│
+└── requirements.txt           # Dependencias Python</code></pre>
+        </div>
+
+        <h3><span class="emoji">🎯</span> Principios de Arquitectura Aplicados</h3>
+
+        <div class="info">
+            <h4>1. Separation of Concerns (Separación de Responsabilidades)</h4>
+            <ul>
+                <li><strong>API Layer</strong>: Solo maneja requests/responses</li>
+                <li><strong>Business Logic</strong>: En services/crud</li>
+                <li><strong>Data Layer</strong>: Modelos y acceso a BD</li>
+                <li><strong>Infrastructure</strong>: Docker, configuración</li>
+            </ul>
+        </div>
+
+        <div class="info">
+            <h4>2. Dependency Injection</h4>
+            <pre><code>def create_item(item: ItemCreate, db: Session = Depends(get_db)):
+    """FastAPI inyecta automáticamente la sesión de BD"""
+    return crud.create_item(db=db, item=item)</code></pre>
+        </div>
+
+        <h2 id="practical-cases"><span class="emoji">🧪</span> 6. Casos de Uso Prácticos</h2>
+
+        <h3>Flujo Completo de Desarrollo</h3>
+
+        <div class="command-box">
+            <strong>1. Iniciar Entorno de Desarrollo</strong>
+            <pre><code># ✅ Un solo comando para todo
+make up
+
+# Verificar que todo funciona
+make status</code></pre>
+        </div>
+
+        <div class="command-box">
+            <strong>2. Hacer Cambios en el Modelo</strong>
+            <pre><code># app/database/models.py
+class Item(Base):
+    __tablename__ = "items"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True, nullable=False)
+    price = Column(Float, nullable=False)
+    description = Column(String)  # ✅ Nuevo campo</code></pre>
+        </div>
+
+        <div class="command-box">
+            <strong>3. Crear y Aplicar Migración</strong>
+            <pre><code># Crear migración automática
+make migrate-create
+# Ingresa: "Add description field to items"
+
+# Aplicar migración
+make migrate</code></pre>
+        </div>
+
+        <div class="command-box">
+            <strong>4. Testing</strong>
+            <pre><code># Ejecutar tests
+make test
+
+# Ver logs si hay problemas
+make logs
+
+# Debug completo
+make debug</code></pre>
+        </div>
+
+        <h2 id="student-exercises"><span class="emoji">🎓</span> 7. Ejercicios para Estudiantes</h2>
+
+        <div class="highlight">
+            <h3><span class="emoji">📝</span> Ejercicio 1: Extender el Modelo (Básico)</h3>
+            <ol>
+                <li>Agregar campo <code>category</code> al modelo Item</li>
+                <li>Crear migración para el nuevo campo</li>
+                <li>Actualizar schemas y CRUD operations</li>
+                <li>Probar con Postman/curl</li>
+            </ol>
+        </div>
+
+        <div class="success">
+            <strong>Solución esperada:</strong>
+            <pre><code># Modelo
+category = Column(String, default="general")
+
+# Schema  
+class ItemBase(BaseModel):
+    name: str
+    price: float
+    category: str = "general"</code></pre>
+        </div>
+
+        <div class="highlight">
+            <h3><span class="emoji">📝</span> Ejercicio 2: Endpoints Avanzados (Intermedio)</h3>
+            <ol>
+                <li>Implementar filtro por categoría: <code>GET /items/?category=electronics</code></li>
+                <li>Implementar búsqueda por nombre: <code>GET /items/search?q=laptop</code></li>
+                <li>Implementar paginación: <code>GET /items/?skip=0&limit=10</code></li>
+            </ol>
+        </div>
+
+        <div class="command-box">
+            <strong>🔥 Comandos de Referencia Rápida</strong>
+            <pre><code># Docker
+make up          # Iniciar todo
+make down        # Detener todo
+make logs        # Ver logs
+make shell       # Acceder al contenedor
+make db-shell    # Acceder a PostgreSQL
+
+# Base de Datos
+make migrate             # Aplicar migraciones
+make migrate-create      # Crear nueva migración
+make migrate-history     # Ver historial
+
+# Desarrollo
+make test        # Ejecutar tests
+make debug       # Información de debug
+make fix         # Fix completo
+make clean       # Limpiar todo</code></pre>
+        </div>
+
+        <h2><span class="emoji">🎯</span> Conclusiones y Siguientes Pasos</h2>
+
+        <div class="success">
+            <h3>✅ Lo que Logramos</h3>
+            <ol>
+                <li><strong>🗄️ Base de Datos Persistente</strong>: De memoria volátil a PostgreSQL profesional</li>
+                <li><strong>🐳 Containerización</strong>: Deployment consistente con Docker</li>
+                <li><strong>🔄 Migraciones Automáticas</strong>: Control de versiones de BD con Alembic</li>
+                <li><strong>🛠️ Automatización</strong>: Workflow simplificado con Makefile</li>
+                <li><strong>🏗️ Arquitectura Escalable</strong>: Separación de capas y responsabilidades</li>
+            </ol>
+        </div>
+
+        <div class="info">
+            <h3>🚀 Próximos Pasos Sugeridos</h3>
+            <ol>
+                <li><strong>Autenticación JWT</strong>: Proteger endpoints</li>
+                <li><strong>Rate Limiting</strong>: Prevenir abuso de API</li>
+                <li><strong>Logging Estructurado</strong>: Monitoreo en producción</li>
+                <li><strong>Tests Automatizados</strong>: CI/CD pipeline</li>
+                <li><strong>API Versioning</strong>: Manejo de cambios breaking</li>
+                <li><strong>Caching con Redis</strong>: Optimización de performance</li>
+                <li><strong>Metrics y Monitoring</strong>: Observabilidad completa</li>
+            </ol>
+        </div>
+
+        <div class="highlight">
+            <h3>📚 Recursos Adicionales</h3>
+            <ul>
+                <li><a href="https://fastapi.tiangolo.com/" target="_blank">FastAPI Documentation</a></li>
+                <li><a href="https://docs.sqlalchemy.org/en/14/orm/tutorial.html" target="_blank">SQLAlchemy ORM Tutorial</a></li>
+                <li><a href="https://alembic.sqlalchemy.org/en/latest/tutorial.html" target="_blank">Alembic Tutorial</a></li>
+                <li><a href="https://docs.docker.com/compose/" target="_blank">Docker Compose Reference</a></li>
+                <li><a href="https://www.postgresql.org/docs/" target="_blank">PostgreSQL Documentation</a></li>
+            </ul>
+        </div>
+
+        <div class="highlight" style="text-align: center;">
+            <h2 style="margin: 0; color: white;"><span class="emoji">🎓</span> ¡Felicitaciones!</h2>
+            <p style="margin: 10px 0 0 0; color: white; font-size: 1.1em;">Has completado la transformación de una API simple a una aplicación de grado profesional.</p>
+            <p style="margin: 10px 0 0 0; color: white;">Esta implementación sigue las mejores prácticas de la industria y prepara a los estudiantes para proyectos reales de software empresarial.</p>
+        </div>
+    </div>
+</body>
+</html>

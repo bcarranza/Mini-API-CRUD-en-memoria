@@ -1,45 +1,74 @@
-# Mini API CRUD en Memoria
+# Mini API CRUD con PostgreSQL
 
-Una API REST simple usando FastAPI para realizar operaciones CRUD sobre items almacenados en memoria.
+Una API REST usando FastAPI para realizar operaciones CRUD sobre items con PostgreSQL y Alembic para migraciones.
+
+## 🐳 Inicio Rápido con Docker (Recomendado)
+
+```bash
+# Clonar el repositorio
+git clone <repository-url>
+cd Mini-API-CRUD-en-memoria
+
+# Iniciar con Docker (incluye PostgreSQL automáticamente)
+docker-compose up --build
+
+# O usar el Makefile
+make up
+```
+
+**¡Eso es todo!** La API estará en http://localhost:8000
+
+📚 **Para más detalles sobre Docker, ver [README_DOCKER.md](README_DOCKER.md)**
 
 ## Estructura del Proyecto
 
 ```
 Mini-API-CRUD-en-memoria/
-├── app/
-│   ├── __init__.py
-│   ├── main.py                 # Aplicación principal FastAPI
-│   ├── api/
-│   │   ├── __init__.py
-│   │   └── routes/
-│   │       ├── __init__.py
-│   │       └── items.py        # Rutas para CRUD de items
-│   ├── models/
-│   │   ├── __init__.py
-│   │   └── item.py            # Modelos Pydantic
-│   └── database/
-│       ├── __init__.py
-│       └── memory_db.py       # Lógica de base de datos en memoria
-├── requirements.txt           # Dependencias del proyecto
-└── README.md                 # Este archivo
+├── 🐳 Docker
+│   ├── docker-compose.yml      # Servicios Docker
+│   ├── Dockerfile             # Imagen de la aplicación
+│   ├── docker-entrypoint.sh   # Script de inicio
+│   └── .dockerignore          # Archivos ignorados
+├── 📊 Base de Datos
+│   ├── alembic.ini            # Configuración Alembic
+│   └── alembic/               # Migraciones
+│       ├── env.py
+│       └── versions/
+├── 🚀 Aplicación
+│   └── app/
+│       ├── main.py            # FastAPI principal
+│       ├── schemas.py         # Esquemas Pydantic
+│       ├── api/routes/items.py # Endpoints CRUD
+│       └── database/
+│           ├── db.py          # Configuración PostgreSQL
+│           ├── models.py      # Modelos SQLAlchemy
+│           └── crud.py        # Operaciones CRUD
+├── 📚 Documentación
+│   ├── README_DOCKER.md       # Guía completa Docker
+│   ├── DATABASE_SETUP.md      # Setup manual PostgreSQL
+│   └── Makefile              # Comandos útiles
+└── requirements.txt           # Dependencias Python
 ```
 
-## Instalación
+## 🔧 Instalación Manual (Alternativa)
 
-1. Instalar las dependencias:
-```bash
-pip install -r requirements.txt
-```
+Si prefieres no usar Docker:
 
-## Ejecución
+1. **Instalar PostgreSQL** y crear base de datos `mini_crud_db`
+2. **Instalar dependencias Python:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. **Ejecutar migraciones:**
+   ```bash
+   alembic upgrade head
+   ```
+4. **Iniciar servidor:**
+   ```bash
+   uvicorn app.main:app --reload
+   ```
 
-Para ejecutar el servidor de desarrollo:
-
-```bash
-uvicorn app.main:app --reload
-```
-
-La API estará disponible en: `http://localhost:8000`
+📖 **Guía detallada en [DATABASE_SETUP.md](DATABASE_SETUP.md)**
 
 ## Documentación
 
@@ -49,40 +78,38 @@ FastAPI genera automáticamente documentación interactiva:
 
 ## Endpoints
 
-### Items Implementados ✅
+### Endpoints Disponibles ✅
 
 - `POST /api/v1/items/` - Crear un nuevo item
 - `GET /api/v1/items/` - Obtener todos los items
 - `GET /api/v1/items/{item_id}` - Obtener un item específico
-
-### Items por Implementar (Ejercicio para Estudiantes) 📝
-
 - `PUT /api/v1/items/{item_id}` - Actualizar un item
 - `DELETE /api/v1/items/{item_id}` - Eliminar un item
 
-## 🎯 Ejercicio para Estudiantes
+## 📊 Datos de Prueba
 
-Este proyecto está parcialmente implementado. Los estudiantes deben completar las operaciones **UPDATE (PUT)** y **DELETE**.
+La aplicación incluye datos de muestra que se cargan automáticamente:
+- Laptop ($999.99)
+- Mouse ($29.99)
+- Teclado ($79.99)
+- Monitor ($299.99)
+- Auriculares ($149.99)
 
-### Tareas a realizar:
+## 🧪 Para Estudiantes
 
-#### 1. Modelo ItemUpdate (`app/models/item.py`)
-- [ ] Descomentar y completar la clase `ItemUpdate`
-- [ ] Debe tener los mismos campos que `ItemCreate`
+Este proyecto es perfecto para aprender:
+- **FastAPI** y desarrollo de APIs REST
+- **PostgreSQL** con SQLAlchemy ORM
+- **Migraciones** de base de datos con Alembic
+- **Docker** y containerización
+- **Arquitectura** de aplicaciones web modernas
 
-#### 2. Funciones de Base de Datos (`app/database/memory_db.py`)
-- [ ] Implementar `update_item_by_id()`
-- [ ] Implementar `delete_item_by_id()`
-- [ ] Descomentar el import de `ItemUpdate`
-
-#### 3. Endpoints de API (`app/api/routes/items.py`)
-- [ ] Implementar endpoint PUT `/items/{item_id}`
-- [ ] Implementar endpoint DELETE `/items/{item_id}`
-- [ ] Descomentar los imports necesarios
-
-### 💡 Pistas y Guías
-
-Todos los archivos contienen comentarios `TODO:` con pistas específicas sobre cómo implementar cada función.
+### Extensiones sugeridas:
+- Añadir autenticación JWT
+- Implementar paginación
+- Agregar filtros y búsqueda
+- Añadir validaciones avanzadas
+- Implementar cache con Redis
 
 ### Ejemplo de uso
 
